@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Support\Str;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,6 +27,11 @@ class User extends Authenticatable
         'password',
         'resto_id', 
         'plan_id',
+        'username',
+        'provider',
+        'provider_id',
+        'provider_token',
+        'picture',
     ];
 
     /**
@@ -47,4 +53,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public static function generateUserName($username){
+        if($username==null){
+            $username==Str::lower(Str::random(8));
+        }
+        if(User::where('username',$username)->exists()){
+            $newUsername=$username.Str::lower(Str::random(3));
+            $username=self::generateUserName($newUsername);
+        }
+        return $username;
+    }
 }

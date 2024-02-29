@@ -12,6 +12,12 @@ use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RestaurentController;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use App\Models\User;
+use App\Http\Controllers\Auth\ProviderController;
+use Laravel\Socialite\Facades\Socialite;
+
+
+
 
 
 /*
@@ -24,6 +30,9 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/auth/{provider}/redirect',[ProviderController::class,'redirect'] );
+Route::get('/auth/{provider}/callback',[ProviderController::class,'callback'] );
 
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
 
